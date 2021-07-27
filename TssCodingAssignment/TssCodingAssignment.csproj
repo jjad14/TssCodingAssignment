@@ -21,4 +21,8 @@
     <ProjectReference Include="..\TssCodingAssignment.Models\TssCodingAssignment.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Controllers\" />
+  </ItemGroup>
+
 </Project>
