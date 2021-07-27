@@ -1,6 +1,6 @@
 using System;
 
-namespace TssCodingAssignment.Models
+namespace TssCodingAssignment.Models.ViewModels
 {
     public class ErrorViewModel
     {

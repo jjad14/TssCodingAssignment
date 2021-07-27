@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TssCodingAssignment.Data
+namespace TssCodingAssignment.DataAccess.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

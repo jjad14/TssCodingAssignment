@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using TssCodingAssignment.Models;
+using TssCodingAssignment.Models.ViewModels;
 
 namespace TssCodingAssignment.Controllers
 {
@@ -18,16 +18,19 @@ namespace TssCodingAssignment.Controllers
             _logger = logger;
         }
 
+        // action method
         public IActionResult Index()
         {
             return View();
         }
 
+        // action method
         public IActionResult Privacy()
         {
             return View();
         }
 
+        // action method
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
