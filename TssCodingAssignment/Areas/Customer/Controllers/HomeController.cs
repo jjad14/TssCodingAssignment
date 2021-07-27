@@ -7,8 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using TssCodingAssignment.Models.ViewModels;
 
-namespace TssCodingAssignment.Controllers
+namespace TssCodingAssignment.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
