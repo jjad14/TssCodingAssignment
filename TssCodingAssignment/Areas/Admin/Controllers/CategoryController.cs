@@ -50,6 +50,7 @@ namespace TssCodingAssignment.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll() 
         {
+            // get all categories
             var categories = _unitOfWork.Category.GetAll();
 
             return Json(new { data = categories });
@@ -62,12 +63,14 @@ namespace TssCodingAssignment.Areas.Admin.Controllers
             // if model validation is valid
             if (ModelState.IsValid)
             {
+                // no id means action was a create
                 if (category.Id == 0)
                 {
                     _unitOfWork.Category.Add(category);
                 }
                 else
                 {
+                    // id found, action was an update
                     _unitOfWork.Category.Update(category);
                 }
                 _unitOfWork.Save();
@@ -76,8 +79,27 @@ namespace TssCodingAssignment.Areas.Admin.Controllers
             }
 
             return View(category);
-
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int id) 
+        {
+            // get category by id
+            var objectFromDb = _unitOfWork.Category.Get(id);
+
+            // no category was found (id was not valid)
+            if (objectFromDb == null) 
+            {
+                return Json(new { success = false, message = "Unknown Category, Cannot Delete" });
+            }
+
+            // remove category and save changes
+            _unitOfWork.Category.Remove(objectFromDb);
+            _unitOfWork.Save();
+
+            return Json(new { success = true, message = "Category Deleted" });
+        }
+
         #endregion
     }
 }
