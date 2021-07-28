@@ -36,5 +36,6 @@ namespace TssCodingAssignment.DataAccess.Repository.IRepository
 
         // remove a range of entities 
         void RemoveRange(IEnumerable<T> entities);
+
     }
 }

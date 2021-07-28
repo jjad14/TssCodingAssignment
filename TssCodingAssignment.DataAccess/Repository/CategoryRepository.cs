@@ -24,9 +24,7 @@ namespace TssCodingAssignment.DataAccess.Repository
 
             if (objectFromDb != null) 
             {
-                objectFromDb.Name = category.Name;
-
-                _db.SaveChanges();            
+                objectFromDb.Name = category.Name;        
             }
 
         }
