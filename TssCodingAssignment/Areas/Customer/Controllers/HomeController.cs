@@ -26,12 +26,6 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
         }
 
         // action method
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        // action method
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
