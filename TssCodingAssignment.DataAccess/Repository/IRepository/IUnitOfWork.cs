@@ -12,6 +12,7 @@ namespace TssCodingAssignment.DataAccess.Repository.IRepository
     {
         ICategoryRepository Category { get; }
         IProductRepository Product { get; }
+        IApplicationUserRepository ApplicationUser { get; }
 
         void Save();
     }
