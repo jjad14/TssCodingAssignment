@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TssCodingAssignment.DataAccess.Repository;
@@ -73,27 +74,84 @@ namespace TssCodingAssignment.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Product product)
+        public IActionResult Upsert(ProductVM productVM)
         {
             // if model validation is valid
             if (ModelState.IsValid)
             {
-                // no id means action was a create
-                if (product.Id == 0)
+                // path to wwwroot folder
+                string webRootPath = _webHostEnvironment.WebRootPath;
+                var files = HttpContext.Request.Form.Files;
+
+                // if file count is greater than 0, then a file has been uploaded
+                if (files.Count > 0) 
                 {
-                    _unitOfWork.Product.Add(product);
+                    string fileName = Guid.NewGuid().ToString();
+                    // path to wwwroot/images/products
+                    var uploads = Path.Combine(webRootPath, @"images\products");
+
+                    var extension = Path.GetExtension(files[0].FileName);
+
+                    // if imageUrl is not null, then its an edit action
+                    if (productVM.Product.ImageUrl != null) 
+                    {
+                        var imagePath = Path.Combine(webRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(imagePath)) 
+                        {
+                            // remove old image
+                            System.IO.File.Delete(imagePath);
+                        }
+                    }
+
+                    // After the file is deleted we will have to upload the new file
+                    using (var filesStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(filesStreams);
+                    }
+                    // update the product view model
+                    productVM.Product.ImageUrl = @"\images\products\" + fileName + extension;
+                }
+                else
+                {
+                    // update when the image is not changed
+                    if (productVM.Product.Id != 0)
+                    {
+                        Product objFromDb = _unitOfWork.Product.Get(productVM.Product.Id);
+                        productVM.Product.ImageUrl = objFromDb.ImageUrl;
+                    }
+                }
+
+                // no id means action was a create
+                if (productVM.Product.Id == 0)
+                {
+                    _unitOfWork.Product.Add(productVM.Product);
                 }
                 else
                 {
                     // id found, action was an update
-                    _unitOfWork.Product.Update(product);
+                    _unitOfWork.Product.Update(productVM.Product);
                 }
                 _unitOfWork.Save();
 
                 return RedirectToAction(nameof(Index));
             }
+            else
+            {
+                // if model state is invalid, return fresh version of viewmodel to view
+                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                });
 
-            return View(product);
+                if (productVM.Product.Id != 0) 
+                {
+                    productVM.Product = _unitOfWork.Product.Get(productVM.Product.Id);
+                }
+            }
+
+            return View(productVM);
         }
 
         [HttpDelete]
@@ -106,6 +164,18 @@ namespace TssCodingAssignment.Areas.Admin.Controllers
             if (objectFromDb == null)
             {
                 return Json(new { success = false, message = "Unknown Product, Cannot Delete" });
+            }
+
+            // get the wwwroot path
+            string webRootPath = _webHostEnvironment.WebRootPath;
+
+            // find image path
+            var imagePath = Path.Combine(webRootPath, objectFromDb.ImageUrl.TrimStart('\\'));
+
+            // if image path exists then we have to remove that.
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
             }
 
             // remove category and save changes

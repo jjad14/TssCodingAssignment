@@ -24,4 +24,8 @@
     <ProjectReference Include="..\TssCodingAssignment.Models\TssCodingAssignment.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+  </ItemGroup>
+
 </Project>

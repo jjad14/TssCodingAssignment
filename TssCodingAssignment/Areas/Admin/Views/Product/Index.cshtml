@@ -1,15 +1,17 @@
-﻿@{
+﻿
+@{
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <br />
 <div class="row">
     <div class="col-6">
-        <h2 class="text-dark">Category List </h2>
+        <h2 class="text-dark">Product List </h2>
     </div>
     <div class="col-6">
         <div class="float-end">
-            <a class="btn btn-primary" asp-action="Upsert"><i class="fas fa-plus"></i> &nbsp; Create New Category</a>
+            <a class="btn btn-primary" asp-action="Upsert"><i class="fas fa-plus"></i> &nbsp; Create New Product</a>
         </div>
     </div>
 </div>
@@ -20,9 +22,9 @@
     <table class="table table-striped border" id="tblData">
         <thead class="thead-dark">
             <tr class="table-secondary">
-                <th>
-                    Name
-                </th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
                 <th></th>
             </tr>
         </thead>
@@ -31,5 +33,7 @@
 
 @section Scripts {
 
-    <script src="~/js//category.js"></script>
+    <script src="~/js//product.js"></script>
 }
+
+
