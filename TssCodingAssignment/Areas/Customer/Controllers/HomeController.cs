@@ -26,6 +26,7 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
         // action method
         public IActionResult Index()
         {
+            // TODO: Needs to be a view model, with categories as selectlistitems, a search value and orderBy, then we bind the vm to the controller
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
             
             return View(productList);
