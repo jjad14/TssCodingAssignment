@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.8">
@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TssCodingAssignment.DataAccess\TssCodingAssignment.DataAccess.csproj" />
     <ProjectReference Include="..\TssCodingAssignment.Models\TssCodingAssignment.Models.csproj" />
+    <ProjectReference Include="..\TssCodingAssignment.Utility\TssCodingAssignment.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>

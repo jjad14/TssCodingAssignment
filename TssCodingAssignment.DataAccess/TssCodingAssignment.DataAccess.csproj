@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TssCodingAssignment.Models\TssCodingAssignment.Models.csproj" />
+    <ProjectReference Include="..\TssCodingAssignment.Utility\TssCodingAssignment.Utility.csproj" />
   </ItemGroup>
 
 </Project>
