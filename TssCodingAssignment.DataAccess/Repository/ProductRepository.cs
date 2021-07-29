@@ -23,6 +23,7 @@ namespace TssCodingAssignment.DataAccess.Repository
 
             if (objectFromDb != null) 
             {
+                // user might not upload a new image
                 if (product.ImageUrl != null)
                 {
                     objectFromDb.ImageUrl = product.ImageUrl;
