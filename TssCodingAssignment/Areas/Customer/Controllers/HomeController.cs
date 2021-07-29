@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using TssCodingAssignment.DataAccess.Repository.IRepository;
+using TssCodingAssignment.Models;
 using TssCodingAssignment.Models.ViewModels;
 
 namespace TssCodingAssignment.Areas.Customer.Controllers
@@ -13,16 +15,20 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         // action method
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+            
+            return View(productList);
         }
 
         // action method
