@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +7,12 @@ using System.Threading.Tasks;
 using TssCodingAssignment.DataAccess.Repository;
 using TssCodingAssignment.DataAccess.Repository.IRepository;
 using TssCodingAssignment.Models;
+using TssCodingAssignment.Utility;
 
 namespace TssCodingAssignment.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

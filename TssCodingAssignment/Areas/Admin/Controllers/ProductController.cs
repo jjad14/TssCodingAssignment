@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -10,10 +11,12 @@ using TssCodingAssignment.DataAccess.Repository;
 using TssCodingAssignment.DataAccess.Repository.IRepository;
 using TssCodingAssignment.Models;
 using TssCodingAssignment.Models.ViewModels;
+using TssCodingAssignment.Utility;
 
 namespace TssCodingAssignment.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
