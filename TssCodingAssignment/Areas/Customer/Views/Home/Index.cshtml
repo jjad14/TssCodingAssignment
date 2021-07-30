@@ -1,33 +1,31 @@
-﻿@model IEnumerable<TssCodingAssignment.Models.Product>
+﻿@model TssCodingAssignment.Models.ViewModels.HomeVM
 
 
 <div class="row mt-4 mb-2 pt-3 border shadow bg-white" style="border: 1px solid #acacac; border-radius: 5px;">
     <div class="col-4">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" asp-for="@Model.Search">
             <div class="input-group-append">
                 <button class="btn btn-outline-primary" type="button">Search</button>
             </div>
         </div>
     </div>
     <div class="col-4">
-        <select class="form-select" aria-label="Default select example">
-            <option selected disabled>Category</option>
-        </select>
+        @Html.DropDownListFor(c => c.CategoryList, Model.CategoryList, "Select Category", new { @class = "form-control" })
     </div>
     <div class="col-4">
-        <select class="form-select" aria-label="Default select example">
+        <select class="form-select" aria-label="Default select example" asp-for="@Model.OrderBy">
             <option selected disabled>Sort By</option>
             <option value="1">Price: Low to High</option>
             <option value="2">Price: High to Low</option>
-            <option value="3">New to Old</option>
-            <option value="4">Old to New</option>
+            <option value="3">Newest to Oldest</option>
+            <option value="4">Oldest to Newest</option>
         </select>
     </div>
 </div>
 
 <div class="row pb-3 backgroundWhite">
-    @foreach (var product in Model)
+    @foreach (var product in Model.ProductList)
     {
         <div class="col-lg-2 col-md-4">
             <div class="row p-2">
@@ -53,11 +51,8 @@
 
 
 <style>
-
-
     .card-img-top {
         min-height: 320px;
         max-height: 320px;
     }
-
 </style>

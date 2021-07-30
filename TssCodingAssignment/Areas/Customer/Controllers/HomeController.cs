@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -26,10 +27,22 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
         // action method
         public IActionResult Index()
         {
-            // TODO: Needs to be a view model, with categories as selectlistitems, a search value and orderBy, then we bind the vm to the controller
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+            // TODO: Needs to be a view model, with categories as selectlistitems, a search value and orderBy, then we bind the vm to the view
+            // IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+
+            HomeVM homeVM = new HomeVM()
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                }),
+                Search = "",
+                OrderBy = "",
+                ProductList = _unitOfWork.Product.GetAll(includeProperties: "Category")
+        };
             
-            return View(productList);
+            return View(homeVM);
         }
 
         // action method
