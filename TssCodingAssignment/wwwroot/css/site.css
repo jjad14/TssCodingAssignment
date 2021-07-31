@@ -63,12 +63,37 @@ body {
   margin-bottom: 60px;
 }
 
-
-
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+
+.boxContainer {
+    display: table;
+}
+
+.box {
+    width: 200px;
+    height: 200px;
+    background: #0088cc;
+    padding: 2%;
+    display: table-cell;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+#header {
+    position: relative;
+    min-height: 150px;
+}
+
+#header-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }

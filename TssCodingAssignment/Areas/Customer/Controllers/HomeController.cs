@@ -45,6 +45,20 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
             return View(homeVM);
         }
 
+        public IActionResult Details(int id) 
+        {
+            var productFromDb = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id, includeProperties: "Category");
+
+            ShoppingCart cart = new ShoppingCart()
+            {
+                   Product = productFromDb,
+                   ProductId = productFromDb.Id
+            };
+
+            return View(cart);
+
+        }
+
         // action method
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -52,4 +66,9 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
+
+
+
 }
+
+
