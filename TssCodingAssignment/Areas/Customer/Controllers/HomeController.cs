@@ -44,8 +44,23 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
                 Search = "",
                 OrderBy = "",
                 ProductList = _unitOfWork.Product.GetAll(includeProperties: "Category")
-        };
-            
+            };
+
+            // get the id of the currently logged in user
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            // user not authenticated
+            if (claim != null) 
+            {
+                var count = _unitOfWork.ShoppingCart
+                    .GetAll(c => c.ApplicationUserId == claim.Value)
+                    .ToList().Count();
+
+                // Add cart count to session
+                HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
+            }
+
             return View(homeVM);
         }
 
@@ -115,8 +130,8 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
                     .ToList().Count();
 
                 // Add cart count to session
-                HttpContext.Session.SetObject(SD.ssShoppingCart, count);
-                // HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
+                HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
+                // HttpContext.Session.SetObject(SD.ssShoppingCart, count);
 
                 return RedirectToAction(nameof(Index));
             }
