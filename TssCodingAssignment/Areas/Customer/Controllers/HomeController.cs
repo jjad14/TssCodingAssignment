@@ -55,7 +55,7 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
             {
                 var count = _unitOfWork.ShoppingCart
                     .GetAll(c => c.ApplicationUserId == claim.Value)
-                    .ToList().Count();
+                    .Select(t => t.Count).Sum();
 
                 // Add cart count to session
                 HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
@@ -126,8 +126,8 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
                 _unitOfWork.Save();
 
                 var count = _unitOfWork.ShoppingCart
-                    .GetAll(c => c.ApplicationUserId == CartObj.ApplicationUserId)
-                    .ToList().Count();
+                    .GetAll(c => c.ApplicationUserId == claim.Value)
+                    .Select(t => t.Count).Sum();
 
                 // Add cart count to session
                 HttpContext.Session.SetInt32(SD.ssShoppingCart, count);

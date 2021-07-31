@@ -93,7 +93,9 @@ namespace TssCodingAssignment.Areas.Identity.Pages.Account
                     // get user via email
                     var user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Email == Input.Email);
 
-                    int count = _unitOfWork.ShoppingCart.GetAll(c => c.ApplicationUserId == user.Id).Count();
+                    var count = _unitOfWork.ShoppingCart
+                        .GetAll(c => c.ApplicationUserId == user.Id)
+                        .Select(t => t.Count).Sum();
 
                     // set the session
                     HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
