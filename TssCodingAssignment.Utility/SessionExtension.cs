@@ -10,6 +10,7 @@ namespace TssCodingAssignment.Utility
 {
     // This is just a generic implementation of session to convert it into an object and store it
     // and we'll retrieve it convert it back and displayed.
+    // ASP.NET Core has a built in session for integers only, but this class allows us to store ints, objects, lists etc
     public static class SessionExtension
     {
         // "this" keyword represents the object itself.

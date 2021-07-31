@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using TssCodingAssignment.DataAccess.Repository.IRepository;
 using TssCodingAssignment.Models;
 using TssCodingAssignment.Models.ViewModels;
+using TssCodingAssignment.Utility;
 
 namespace TssCodingAssignment.Areas.Customer.Controllers
 {
@@ -107,6 +109,14 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
                 }
 
                 _unitOfWork.Save();
+
+                var count = _unitOfWork.ShoppingCart
+                    .GetAll(c => c.ApplicationUserId == CartObj.ApplicationUserId)
+                    .ToList().Count();
+
+                // Add cart count to session
+                HttpContext.Session.SetObject(SD.ssShoppingCart, count);
+                // HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
 
                 return RedirectToAction(nameof(Index));
             }
