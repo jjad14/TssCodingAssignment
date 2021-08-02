@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TssCodingAssignment.DataAccess.Data;
+using TssCodingAssignment.DataAccess.Initializer;
 using TssCodingAssignment.DataAccess.Repository;
 using TssCodingAssignment.DataAccess.Repository.IRepository;
 using TssCodingAssignment.Utility;
@@ -42,6 +43,7 @@ namespace TssCodingAssignment
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
@@ -61,7 +63,7 @@ namespace TssCodingAssignment
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -82,7 +84,10 @@ namespace TssCodingAssignment
             app.UseSession();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
+
+            dbInitializer.Initialize();
 
             app.UseEndpoints(endpoints =>
             {
