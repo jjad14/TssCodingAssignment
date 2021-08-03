@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +23,6 @@ namespace TssCodingAssignment.Areas.Admin.Controllers
         private readonly IUnitOfWork _unitOfWork;
         // uploading images on server inside wwwroot
         private readonly IWebHostEnvironment _webHostEnvironment;
-
 
         public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
@@ -71,6 +71,7 @@ namespace TssCodingAssignment.Areas.Admin.Controllers
         {
             // get all products
             var products = _unitOfWork.Product.GetAll(includeProperties: "Category");
+
 
             return Json(new { data = products });
         }
@@ -128,11 +129,15 @@ namespace TssCodingAssignment.Areas.Admin.Controllers
                 // no id means action was a create
                 if (productVM.Product.Id == 0)
                 {
+                    productVM.Product.CreatedDate = DateTime.Now;
+                    productVM.Product.ModifiedDate = DateTime.Now;
+
                     _unitOfWork.Product.Add(productVM.Product);
                 }
                 else
                 {
                     // id found, action was an update
+                    productVM.Product.ModifiedDate = DateTime.Now;
                     _unitOfWork.Product.Update(productVM.Product);
                 }
                 _unitOfWork.Save();

@@ -53,7 +53,7 @@ function Delete(url) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-               type: "DELETE",
+                type: "DELETE",
                 url: url,
                 success: function (data) {
                     if (data.success) {
@@ -83,7 +83,7 @@ function Delete(url) {
     //            url: url,
     //            success: function (data) {
     //                if (data.success) {
-                        
+
     //                    toastr.success(data.message);
     //                    dataTable.ajax.reload();
     //                } else {

@@ -1,6 +1,7 @@
 ﻿var dataTable;
 
 $(document).ready(function () {
+
     loadDataTable();
 });
 
@@ -11,9 +12,23 @@ function loadDataTable() {
             "url": "/Admin/Product/GetAll"
         },
         "columns": [
-            { "data": "name", "width": "30%" },
-            { "data": "price", "width": "20%" },
-            { "data": "category.name", "width": "20%" },
+            { "data": "name", "width": "20%" },
+            { "data": "price", "width": "15%" },
+            { "data": "category.name", "width": "15%" },
+            {
+                "data": "createdDate",
+                "render": function (data, type, row) {//data
+                    return moment(row.updatedDate).format('DD/MM/YYYY');
+                },
+                "width": "15%"
+            },
+            {
+                "data": "modifiedDate",
+                "render": function (data, type, row) {//data
+                    return moment(row.updatedDate).format('DD/MM/YYYY');
+                },
+                "width": "15%"
+            },
             {
                 "data": "id",
                 "render": function (data) {
@@ -27,7 +42,7 @@ function loadDataTable() {
                             </a>
                         </div>
                         `;
-                }, "width": "30%"
+                }, "width": "20%"
             }
         ]
     });
@@ -68,31 +83,4 @@ function Delete(url) {
             });
         }
     })
-
-
-
-
-
-
-
-
-
-
-    //    .then((willDelete) => {
-    //    if (willDelete) {
-    //        $.ajax({
-    //           type: "DELETE",
-    //            url: url,
-    //            success: function (data) {
-    //                if (data.success) {
-                        
-    //                    toastr.success(data.message);
-    //                    dataTable.ajax.reload();
-    //                } else {
-    //                    toastr.error(data.message);
-    //                }
-    //            }
-    //        });
-    //    }
-    //})
 }

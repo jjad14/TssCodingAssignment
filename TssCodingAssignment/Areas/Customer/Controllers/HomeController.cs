@@ -29,10 +29,47 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
         }
 
         // action method
-        public IActionResult Index()
+        public IActionResult Index(int categoryId, string orderBy)
         {
-            // TODO: Needs to be a view model, with categories as selectlistitems, a search value and orderBy, then we bind the vm to the view
-            // IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+            var products = Enumerable.Empty<Product>();
+
+            // check if categoryId queryParameter is not 0 (no category selected)
+            if (categoryId != 0 && String.IsNullOrEmpty(orderBy))
+            {
+                products = _unitOfWork.Product
+                    .GetAll(x => x.CategoryId == categoryId, includeProperties: "Category");
+            }
+            else if (!String.IsNullOrEmpty(orderBy))
+            {
+                // orderBy switch, query string determines the orderBy
+                switch (orderBy) 
+                {
+                    case "PriceLH":
+                        products = _unitOfWork.Product
+                            .GetAll(x => x.CategoryId == categoryId, includeProperties: "Category").OrderByDescending(p => p.Price);
+                        break;                    
+                    case "PriceHL":
+                        products = _unitOfWork.Product
+                            .GetAll(x => x.CategoryId == categoryId, includeProperties: "Category").OrderBy(p => p.Price);
+                        break;                    
+                    case "New":
+                        products = _unitOfWork.Product
+                            .GetAll(x => x.CategoryId == categoryId, includeProperties: "Category").OrderByDescending(p => p.CreatedDate);
+                        break;                    
+                    case "Old":
+                        products = _unitOfWork.Product
+                            .GetAll(x => x.CategoryId == categoryId, includeProperties: "Category").OrderBy(p => p.CreatedDate);
+                        break;
+                    default:
+                        products = _unitOfWork.Product
+                            .GetAll(x => x.CategoryId == categoryId, includeProperties: "Category").OrderByDescending(p => p.Price);
+                        break;
+                }
+            }
+            else
+            {
+                products = _unitOfWork.Product.GetAll(includeProperties: "Category");
+            }
 
             HomeVM homeVM = new HomeVM()
             {
@@ -41,9 +78,9 @@ namespace TssCodingAssignment.Areas.Customer.Controllers
                     Text = c.Name,
                     Value = c.Id.ToString()
                 }),
-                Search = "",
-                OrderBy = "",
-                ProductList = _unitOfWork.Product.GetAll(includeProperties: "Category")
+                OrderBy = orderBy,
+                CategoryId = categoryId.ToString(),
+                ProductList = products
             };
 
             // get the id of the currently logged in user

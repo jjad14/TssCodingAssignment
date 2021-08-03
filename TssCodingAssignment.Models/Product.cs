@@ -28,5 +28,8 @@ namespace TssCodingAssignment.Models
 
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
     }
 }

@@ -1,26 +1,23 @@
 ﻿@model TssCodingAssignment.Models.ViewModels.HomeVM
 
 
-<div class="row mt-4 mb-2 pt-3 border shadow bg-white" style="border: 1px solid #acacac; border-radius: 5px;">
-    <div class="col-4">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" asp-for="@Model.Search">
-            <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button">Search</button>
-            </div>
+<div class="row mt-4 mb-2 py-3 border shadow rounded bg-white">
+    <div class="form-group d-flex flex-row">
+        <div class="col-5">
+            @Html.DropDownListFor(c => c.CategoryId, Model.CategoryList, "Select Category", new { @class = "form-control" })
         </div>
-    </div>
-    <div class="col-4">
-        @Html.DropDownListFor(c => c.CategoryList, Model.CategoryList, "Select Category", new { @class = "form-control" })
-    </div>
-    <div class="col-4">
-        <select class="form-select" aria-label="Default select example" asp-for="@Model.OrderBy">
-            <option selected disabled>Sort By</option>
-            <option value="1">Price: Low to High</option>
-            <option value="2">Price: High to Low</option>
-            <option value="3">Newest to Oldest</option>
-            <option value="4">Oldest to Newest</option>
-        </select>
+        <div class="col-5">
+            <select class="form-select" aria-label="Default select example" name="orderBy" asp-for="@Model.OrderBy" id="select-category">
+                <option selected>Sort By</option>
+                <option value="PriceLH">Price: Low to High</option>
+                <option value="PriceHL">Price: High to Low</option>
+                <option value="New">Newest to Oldest</option>
+                <option value="Old">Oldest to Newest</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <a asp-area="Customer" asp-controller="Home" asp-action="Index" asp-route-categoryId="@Model.CategoryId" asp-route-orderBy="@Model.OrderBy" class="btn btn-primary"><i class="fas fa-filter"></i></a>
+        </div>
     </div>
 </div>
 
@@ -34,7 +31,6 @@
                         <img src="@product.ImageUrl" class="card-img-top rounded shadow-sm img-fluid" />
                         <div class="pl-1 pt-1 text-center">
                             <p class="card-title h5"><b style="color:#2c3e50">@product.Name</b></p>
-                            <p class="card-title" style="font-size: 14px;">by <b>Andrzej Sapkowski</b></p>
                         </div>
                         <div style="padding-left:5px;" class="text-center">
                             <p>Price: <b class="text-primary">$ @product.Price.ToString("0.00")</b></p>
@@ -56,3 +52,13 @@
         max-height: 320px;
     }
 </style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#sortBtn').click(function () {
+                window.location.href = "Customer/Home/Index?categoryId=1&orderBy=Price";
+            })
+        });
+    </script>
+}
