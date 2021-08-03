@@ -11,3 +11,24 @@ Using Visual Studio, C#, and front-end technologies (such as bootstrap, jquery, 
   * Products grouped by ?Type?, with subtotals/totals on value
   * Products that were created in the last 5 days
   * Products that were deleted in the last 10 days
+
+
+## My Solution
+
+* Back end
+  * Unit of Work
+  * Repository Pattern
+  * N-tier architecture 
+  * Authentication (Admin and Customers)
+  * Authorization (Admins can create, update and delete products and categories)
+  * Code First approach (EF Core)
+  * Sql Server
+
+* Client Side (JavaScript Libraries): 
+  * Jquery
+  * Bootstrap 4
+  * dataTables.net
+  * toastr.js
+  * font awesome
+  * sweatalert2
+  * moment.js
