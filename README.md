@@ -32,3 +32,10 @@ Using Visual Studio, C#, and front-end technologies (such as bootstrap, jquery, 
   * font awesome
   * sweatalert2
   * moment.js
+
+Default Admin User Credentials found in DbInitializer.cs
+
+Email: admin@gmail.com
+Password: Admin@123
+
+
